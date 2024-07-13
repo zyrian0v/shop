@@ -1,0 +1,10 @@
+{{define "body"}}
+        <div class="product-list">
+                {{range .Products}}
+                        <article>
+                                <h2><a href="/products/{{.Slug}}">{{.Name}}</a></h2>
+                                <p>{{.Detail}}</p>
+                        </article>
+                {{end}}
+        </div>
+{{end}}

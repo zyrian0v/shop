@@ -1,0 +1,22 @@
+.double {
+        display: flex;
+}
+
+.sidebar {
+        width: 20%;
+}
+
+.product-list {
+        width: 80%;
+        display: flex;
+        flex-wrap: wrap;
+}
+
+.product-list article {
+        width: 45%;
+        margin: 2%;
+}
+
+.delete {
+        margin-left: 2rem;
+}

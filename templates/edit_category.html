@@ -1,0 +1,13 @@
+{{define "body"}}
+        <h2>Edit category "{{.Name}}"</h2>
+
+        <form method="post">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" value="{{.Name}}">
+
+                <label for="slug">Slug</label>
+                <input type="text" id="slug" name="slug" value="{{.Slug}}">
+
+                <input type="submit" value="Submit">
+        </form>
+{{end}}

@@ -1,0 +1,20 @@
+{{define "body"}}
+        <h1>Create product</h1>
+
+        <form method="post">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name">
+
+                <label for="detail">Detail</label>
+                <textarea name="detail" id="detail"></textarea>
+
+                <label for="category">Category</label>
+                <select name="category" id="category">
+                        {{range .Categories}}
+                                <option value="{{.Id}}">{{.Name}}</option>
+                        {{end}}
+                </select>
+
+                <input type="submit" value="Submit">
+        </form>
+{{end}}

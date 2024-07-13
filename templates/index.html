@@ -1,0 +1,18 @@
+{{define "body"}}
+        <div class="double">
+                <div class="sidebar">
+                        {{range .Categories}}
+                                <div><a href="/category/{{.Slug}}">{{.Name}}</a></div>
+                        {{end}}
+                </div>
+
+                <div class="product-list">
+                        {{range .Products}}
+                                <article>
+                                        <h2><a href="/products/{{.Slug}}">{{.Name}}</a></h2>
+                                        <p>{{.Detail}}</p>
+                                </article>
+                        {{end}}
+                </div>
+        </div>
+{{end}}
