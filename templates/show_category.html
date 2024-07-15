@@ -1,15 +1,28 @@
 {{define "body"}}
-        <div class="product-list">
-                {{range .Products}}
-                        <article>
-                                {{if .Filename}}
-                                        <img src="/images/{{.Filename}}" alt="">
-                                {{else}}
-                                        <img src="http://placehold.co/300">
+
+        <div class="double">
+                <div class="sidebar">
+                        {{range .Categories}}
+                                <div><a href="/category/{{.Slug}}">{{.Name}}</a></div>
+                        {{end}}
+                </div>
+
+                <div class="mainbar">
+                        <h2>{{.Category.Name}}</h2>
+
+                        <div class="product-list">
+                                {{range .Products}}
+                                        <article>
+                                                {{if .Filename}}
+                                                        <img src="/images/{{.Filename}}" alt="">
+                                                {{else}}
+                                                        <img src="http://placehold.co/300">
+                                                {{end}}
+                                                <h2><a href="/products/{{.Slug}}">{{.Name}}</a></h2>
+                                                <p>{{.Detail}}</p>
+                                        </article>
                                 {{end}}
-                                <h2><a href="/products/{{.Slug}}">{{.Name}}</a></h2>
-                                <p>{{.Detail}}</p>
-                        </article>
-                {{end}}
+                        </div>
+                </div>
         </div>
 {{end}}

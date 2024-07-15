@@ -6,15 +6,18 @@
         width: 20%;
 }
 
-.product-list {
+.mainbar {
         width: 80%;
+}
+
+.product-list {
         display: flex;
         flex-wrap: wrap;
 }
 
 .product-list article {
-        width: 45%;
-        margin: 2%;
+        width: 30%;
+        margin: 1%;
 }
 
 .delete {

@@ -61,22 +61,15 @@ func GetAllProductsWithImage() ([]ProductWithImage, error) {
 	return ps, nil
 }
 
-func GetProductsByCategory(slug string) ([]ProductWithImage, error) {
-	stmt := `SELECT id FROM categories WHERE slug = ?`
-	var catid int
-	err := handle.QueryRow(stmt, slug).Scan(&catid)
-	if err != nil {
-		return nil, err
-	}
-
-	stmt = `SELECT id, name, slug, detail
+func GetProductsByCategory(catid int) ([]ProductWithImage, error) {
+	stmt := `SELECT id, name, slug, detail
 	FROM products WHERE category_id = ?`
 	rows, err := handle.Query(stmt, catid)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	
+
 	var ps []ProductWithImage
 	for rows.Next() {
 		p := ProductWithImage{}

@@ -36,8 +36,8 @@ func GetAllCategories() (cs []Category, err error) {
 }
 
 func GetCategoryBySlug(slug string) (c Category, err error) {
-	stmt := `SELECT name, slug FROM categories WHERE slug = ?`
-	err = handle.QueryRow(stmt, slug).Scan(&c.Name, &c.Slug)
+	stmt := `SELECT id, name, slug FROM categories WHERE slug = ?`
+	err = handle.QueryRow(stmt, slug).Scan(&c.Id, &c.Name, &c.Slug)
 	return
 }
 

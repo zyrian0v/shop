@@ -1,15 +1,26 @@
 {{define "body"}}
-        <h1>{{.Name}}</h1>
 
-        <div class="grid">
-                <div>
-                        {{range .Images}}
-                                <img width="300" src="/images/{{.Filename}}">
+        <div class="double">
+                <div class="sidebar">
+                        {{range .Categories}}
+                                <div><a href="/category/{{.Slug}}">{{.Name}}</a></div>
                         {{end}}
                 </div>
 
-                <div>
-                        <p>{{.Detail}}</p>
+                <div class="mainbar">
+                        <h1>{{.Name}}</h1>
+
+                        <div class="grid">
+                                <div>
+                                        {{range .Images}}
+                                                <img width="300" src="/images/{{.Filename}}">
+                                        {{end}}
+                                </div>
+
+                                <div>
+                                        <p>{{.Detail}}</p>
+                                </div>
+                        </div>
                 </div>
         </div>
 {{end}}
