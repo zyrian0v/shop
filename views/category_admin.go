@@ -2,10 +2,10 @@ package views
 
 import (
 	"fmt"
-	"net/http"
-	"html/template"
-	"shop/db"
 	slugify "github.com/gosimple/slug"
+	"html/template"
+	"net/http"
+	"shop/db"
 )
 
 type NewCategory struct{}
@@ -28,8 +28,8 @@ func (v NewCategory) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (v NewCategory) post(w http.ResponseWriter, r *http.Request) {
 	c := db.Category{
-		Name:   r.FormValue("name"),
-		Slug:   slugify.Make(r.FormValue("name")),
+		Name: r.FormValue("name"),
+		Slug: slugify.Make(r.FormValue("name")),
 	}
 	err := db.AddCategory(c)
 	if err != nil {

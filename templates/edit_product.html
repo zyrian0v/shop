@@ -1,7 +1,7 @@
 {{define "body"}}
         <h2>Edit product "{{.Name}}"</h2>
 
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" value="{{.Name}}">
 
@@ -23,6 +23,17 @@
                                 </option>
                         {{end}}
                 </select>
+
+                <label for="images">Images</label>
+
+                <div class="thumbnails">
+                        {{range .Images}}
+                                <img width="100" src="/images/{{.Filename}}">
+                                <a class="delete-image" href="#">X</a>
+                        {{end}}
+                </div>
+                <input multiple type="file" id="images" name="images">
+
 
                 <input type="submit" value="Submit">
         </form>

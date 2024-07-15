@@ -1,5 +1,11 @@
 package db
 
+type Category struct {
+	Id   int
+	Name string
+	Slug string
+}
+
 func AddCategory(c Category) error {
 	stmt := `INSERT INTO categories (name, slug)
 	VALUES (?, ?)`

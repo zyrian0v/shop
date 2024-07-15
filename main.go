@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"shop/db"
 	"shop/views"
+	"log"
 )
 
 func main() {
@@ -19,8 +20,10 @@ func main() {
 		return
 	}
 
-	fileServer := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fileServer))
+	staticServer := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", staticServer))
+	imageServer := http.FileServer(http.Dir("images"))
+	http.Handle("/images/", http.StripPrefix("/images/", imageServer))
 
 	http.Handle("/", views.Index{})
 	http.Handle("/products/{slug}", views.ShowProduct{})
@@ -37,5 +40,5 @@ func main() {
 	http.Handle("/admin/categories/delete/{slug}", views.DeleteCategory{})
 
 	fmt.Println("serving on :8080")
-	http.ListenAndServe(":8080", nil)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

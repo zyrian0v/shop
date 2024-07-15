@@ -8,7 +8,7 @@ import (
 )
 
 type Index struct {
-	Products []db.Product
+	Products   []db.ProductWithImage
 	Categories []db.Category
 }
 
@@ -18,7 +18,7 @@ func (v Index) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ps, err := db.GetAllProducts()
+	ps, err := db.GetAllProductsWithImage()
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -44,6 +44,7 @@ func (v Index) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 type ShowProduct struct {
 	db.Product
+	Images []db.Image
 }
 
 func (v ShowProduct) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -56,6 +57,13 @@ func (v ShowProduct) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	v.Product = p
 
+	is, err := db.GetProductImages(p.Id)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	v.Images = is
+
 	files := []string{
 		"templates/base.html",
 		"templates/show_product.html",
@@ -67,7 +75,7 @@ func (v ShowProduct) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 type ShowCategory struct {
-	Products []db.Product
+	Products []db.ProductWithImage
 }
 
 func (v ShowCategory) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -78,7 +86,7 @@ func (v ShowCategory) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	v.Products = ps
-	
+
 	files := []string{
 		"templates/base.html",
 		"templates/show_category.html",

@@ -47,6 +47,7 @@ func (v EditProductList) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 type EditProduct struct {
 	db.Product
 	Categories []db.Category
+	Images []db.Image
 }
 
 func (v EditProduct) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -71,6 +72,13 @@ func (v EditProduct) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	v.Categories = cs
 
+	is, err := db.GetProductImages(p.Id)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	v.Images = is
+
 	files := []string{
 		"templates/base.html",
 		"templates/edit_product.html",
@@ -89,9 +97,9 @@ func (v EditProduct) post(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	p := db.Product{
-		Name:   r.FormValue("name"),
-		Slug:   r.FormValue("slug"),
-		Detail: r.FormValue("detail"),
+		Name:       r.FormValue("name"),
+		Slug:       r.FormValue("slug"),
+		Detail:     r.FormValue("detail"),
 		CategoryId: catid,
 	}
 	err = db.EditProduct(slug, p)
@@ -99,10 +107,35 @@ func (v EditProduct) post(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
+	id, err := db.GetProductId(slug)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	r.ParseMultipartForm(10000)
+	files := r.MultipartForm.File["images"]
+	for _, v := range files {
+		filename, err := saveImage(v)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+		i := db.Image{
+			Filename: filename,
+			ProductId: int(id),
+		}
+		err = db.AddImage(i)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+	}
+	
 	http.Redirect(w, r, "/admin/products/edit", 303)
 }
 
-type NewProduct struct{
+type NewProduct struct {
 	Categories []db.Category
 }
 
@@ -136,17 +169,36 @@ func (v NewProduct) post(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	p := db.Product{
-		Name:   r.FormValue("name"),
-		Slug:   slugify.Make(r.FormValue("name")),
-		Detail: r.FormValue("detail"),
+		Name:       r.FormValue("name"),
+		Slug:       slugify.Make(r.FormValue("name")),
+		Detail:     r.FormValue("detail"),
 		CategoryId: catid,
 	}
-
-	_, err = db.AddProduct(p)
+	id, err := db.AddProduct(p)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
+
+	r.ParseMultipartForm(10000)
+	files := r.MultipartForm.File["images"]
+	for _, v := range files {
+		filename, err := saveImage(v)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+		i := db.Image{
+			Filename: filename,
+			ProductId: int(id),
+		}
+		err = db.AddImage(i)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+	}
+
 	http.Redirect(w, r, "/products/"+p.Slug, 303)
 }
 

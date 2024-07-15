@@ -2,6 +2,11 @@
         <div class="product-list">
                 {{range .Products}}
                         <article>
+                                {{if .Filename}}
+                                        <img src="/images/{{.Filename}}" alt="">
+                                {{else}}
+                                        <img src="http://placehold.co/300">
+                                {{end}}
                                 <h2><a href="/products/{{.Slug}}">{{.Name}}</a></h2>
                                 <p>{{.Detail}}</p>
                         </article>

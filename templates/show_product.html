@@ -1,4 +1,15 @@
 {{define "body"}}
         <h1>{{.Name}}</h1>
-        <p>{{.Detail}}</p>
+
+        <div class="grid">
+                <div>
+                        {{range .Images}}
+                                <img width="300" src="/images/{{.Filename}}">
+                        {{end}}
+                </div>
+
+                <div>
+                        <p>{{.Detail}}</p>
+                </div>
+        </div>
 {{end}}

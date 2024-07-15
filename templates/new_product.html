@@ -1,7 +1,7 @@
 {{define "body"}}
         <h1>Create product</h1>
 
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name">
 
@@ -14,6 +14,9 @@
                                 <option value="{{.Id}}">{{.Name}}</option>
                         {{end}}
                 </select>
+
+                <label for="images">Images</label>
+                <input multiple type="file" id="images" name="images">
 
                 <input type="submit" value="Submit">
         </form>
