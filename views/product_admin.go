@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"shop/db"
 	"strconv"
+	"os"
 )
 
 type Admin struct{}
@@ -212,4 +213,33 @@ func (v DeleteProduct) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	http.Redirect(w, r, "/admin/products/edit", 303)
+}
+
+type DeleteImage struct{}
+
+func (v DeleteImage) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+	imgid, err := strconv.Atoi(id)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	img, err := db.GetImageById(imgid)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	err = os.Remove("images/"+img.Filename)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	
+	err = db.DeleteImage(imgid)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	http.Redirect(w, r, r.Header.Get("Referer"), 303)
 }

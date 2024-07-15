@@ -14,7 +14,7 @@ type Product struct {
 
 type ProductWithImage struct {
 	Product
-	Image
+	Filename string
 }
 
 func GetAllProducts() (ps []Product, err error) {

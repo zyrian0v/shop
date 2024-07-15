@@ -29,7 +29,7 @@
                 <div class="thumbnails">
                         {{range .Images}}
                                 <img width="100" src="/images/{{.Filename}}">
-                                <a class="delete-image" href="#">X</a>
+                                <a class="delete-image" href="/admin/images/delete/{{.Id}}">X</a>
                         {{end}}
                 </div>
                 <input multiple type="file" id="images" name="images">

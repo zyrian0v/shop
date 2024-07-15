@@ -29,10 +29,12 @@ func main() {
 	http.Handle("/products/{slug}", views.ShowProduct{})
 	http.Handle("/category/{slug}", views.ShowCategory{})
 	http.Handle("/admin", views.Admin{})
+
 	http.Handle("/admin/products/new", views.NewProduct{})
 	http.Handle("/admin/products/edit", views.EditProductList{})
 	http.Handle("/admin/products/edit/{slug}", views.EditProduct{})
 	http.Handle("/admin/products/delete/{slug}", views.DeleteProduct{})
+	http.Handle("/admin/images/delete/{id}", views.DeleteImage{})
 
 	http.Handle("/admin/categories/new", views.NewCategory{})
 	http.Handle("/admin/categories/edit", views.EditCategoryList{})
