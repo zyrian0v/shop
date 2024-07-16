@@ -14,6 +14,8 @@
                                 <div>
                                         {{range .Images}}
                                                 <img width="300" src="/images/{{.Filename}}">
+                                        {{else}}
+                                                <img src="http://placehold.co/300">
                                         {{end}}
                                 </div>
 

@@ -10,6 +10,10 @@
         width: 80%;
 }
 
+.product-name {
+        font-size: 1.2rem;
+}
+
 .product-list {
         display: flex;
         flex-wrap: wrap;

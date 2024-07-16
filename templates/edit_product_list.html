@@ -1,8 +1,15 @@
 {{define "body"}}
-        {{range .Products}}
-                <p>
-                        <a href="/admin/products/edit/{{.Slug}}">{{.Name}}</a>
-                        <a class="secondary delete" href="/admin/products/delete/{{.Slug}}">Delete</a>
-                </p>
-        {{end}}
+        <h2>Products</h2>
+        <table>
+                <tr>
+                        <th>Name</th>
+                        <th></th>
+                </tr>
+                {{range .Products}}
+                        <tr>
+                                <td><a href="/admin/products/edit/{{.Slug}}">{{.Name}}</a></td>
+                                <td><a class="secondary delete" href="/admin/products/delete/{{.Slug}}">Delete</a></td>
+                        </tr>
+                {{end}}
+        </table>
 {{end}}
