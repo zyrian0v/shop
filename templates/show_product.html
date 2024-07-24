@@ -11,13 +11,29 @@
                         <h1>{{.Name}}</h1>
 
                         <div class="grid">
-                                <div>
-                                        {{range .Images}}
-                                                <img width="300" src="/images/{{.Filename}}">
-                                        {{else}}
-                                                <img src="http://placehold.co/300">
-                                        {{end}}
+                                <div class="glide">
+                                        <div class="glide__track" data-glide-el="track">
+                                                <div class="glide__slides">
+                                                        {{range .Images}}
+                                                                <img class="glide__slide" src="/images/{{.Filename}}">
+                                                        {{else}}
+                                                                <img class="glide__slide" src="http://placehold.co/300">
+                                                        {{end}}
+                                                </div>
+                                        </div>
+
+                                        <div class="glide__bullets" data-glide-el="controls[nav]">
+                                                {{range $i, $v:= .Images}}
+                                                        <button class="glide__bullet" data-glide-dir="={{$i}}"></button>
+                                                {{end}}
+                                        </div>
+
+                                        <div class="glide__arrows" data-glide-el="controls">
+                                                <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><</button>
+                                                <button class="glide__arrow glide__arrow--right" data-glide-dir=">">></button>
+                                        </div>
                                 </div>
+                                              
 
                                 <div>
                                         <p>{{.Detail}}</p>
@@ -25,4 +41,10 @@
                         </div>
                 </div>
         </div>
+
+        <script src="/static/glide.min.js"></script>
+        <script>
+                new Glide(".glide").mount();
+        </script>
+
 {{end}}
